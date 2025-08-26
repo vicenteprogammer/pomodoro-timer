@@ -2,7 +2,6 @@ import styles from './style.module.css'
 
 const Timer = () =>{
   return(
-    <div className={styles.allContainer}>
       <div className={styles.timeBox} >
        <div className={styles.boxButtonTop}>
         <button className={styles.button}>Short Time</button>
@@ -16,7 +15,6 @@ const Timer = () =>{
        <button className={styles.button}>Reset</button>
       </div>
      </div>
-    </div>
   )
 }
 
