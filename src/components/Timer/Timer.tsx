@@ -8,7 +8,7 @@ const Timer = () =>{
         <button className={styles.button}>Medium Time</button>
         <button className={styles.button}>Long Time</button>
        </div>
-      <p className={styles.textTime} >30:20:50</p>
+      <p className={styles.textTime} >00:05:00</p>
       <div className={styles.boxButtonBottom}>
        <button className={styles.button} >Start</button>
        <button className={styles.button}>Stop</button>
