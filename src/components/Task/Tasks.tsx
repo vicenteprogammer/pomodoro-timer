@@ -11,6 +11,8 @@ const Tasks = () =>{
   const [task,setTask] = useState('')
   const [tasks, setTasks] = useState<TasksProps[]>([])
   const [nextId, setNextId] = useState(1)
+
+
   const addTask = ()=>{
     if(task.trim() != ''){
       setTasks((prevTasks) => [
