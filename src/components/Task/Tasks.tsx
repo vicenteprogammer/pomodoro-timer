@@ -29,6 +29,11 @@ const Tasks = () =>{
     setTasks(tasks.filter((t)=> t.id !== id))
   }
 
+  const checkTask = (id: number) =>{
+    alert('Task Completed')
+    setTasks(tasks.filter((t)=> t.id !== id))
+  }
+
   return(
     <div className= {styles.taskContainer}>
       <div className={styles.inputBox}>
@@ -42,7 +47,7 @@ const Tasks = () =>{
               <li key={t.id}>{t.task}</li>
               <div className={styles.buttonsTask}>
                 <button className={styles.btnDelete} onClick={() => deleteTask(t.id)} >Delete</button>
-                <button className={styles.btnCheck} >Check</button>
+                <button className={styles.btnCheck} onClick={()=> checkTask(t.id)}>Check</button>
               </div>
             </div>
           ))}
