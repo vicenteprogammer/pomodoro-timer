@@ -1,36 +1,25 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import styles from "./style.module.css";
 
 const Timer = () => {
-  const [seconds, setSeconds] = useState<number>(0);
-  const [minutes, setMinutes] = useState<number>(5);
+  const [time, setTime] = useState<number>(5 * 60);
   const [isActivity, setIsActivity] = useState(false);
   const intervalRef = useRef<number | null>(null);
 
+
+  useEffect(() => {
+    if (time <= 0) {
+      stopTimer();
+    }
+  }, [time]);
+
   const startTimer = () => {
-    if (intervalRef.current !== null) return; // já tem timer rodando
+    if (intervalRef.current !== null || time === 0) return;
 
     setIsActivity(true);
 
     intervalRef.current = window.setInterval(() => {
-      setSeconds((prevSeconds) => {
-        if (prevSeconds > 0) {
-          return prevSeconds - 1; // só decrementa segundos
-        } else {
-          // segundos chegaram em 0
-          setMinutes((prevMinutes) => {
-            if (prevMinutes === 0) {
-              // acabou o timer
-              clearInterval(intervalRef.current!);
-              intervalRef.current = null;
-              setIsActivity(false);
-              return 0;
-            }
-            return prevMinutes - 1; // só decrementa minutos aqui
-          });
-          return 59; // reinicia segundos
-        }
-      });
+      setTime((prevTime) => prevTime - 1);
     }, 1000);
   };
 
@@ -42,15 +31,19 @@ const Timer = () => {
     setIsActivity(false);
   };
 
-  const resetTimer = (min: number = 5) => {
+
+  const resetTimer = (min: number) => {
     stopTimer();
-    setMinutes(min);
-    setSeconds(0);
+    setTime(min * 60);
   };
 
   const setShortTimer = () => resetTimer(5);
   const setMediumTimer = () => resetTimer(10);
   const setLongTimer = () => resetTimer(25);
+
+  // 4. Calcular minutos e segundos para exibição a partir do estado 'time'
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
 
   return (
     <div className={styles.timeBox}>
@@ -67,6 +60,7 @@ const Timer = () => {
       </div>
 
       <p className={styles.textTime}>
+        {/* Lógica de exibição permanece a mesma */}
         {minutes < 10 ? `0${minutes}` : minutes}:
         {seconds < 10 ? `0${seconds}` : seconds}
       </p>
@@ -82,7 +76,8 @@ const Timer = () => {
         <button className={styles.button} onClick={stopTimer}>
           Stop
         </button>
-        <button className={styles.button} onClick={() => resetTimer(minutes)}>
+        {/* O reset agora reseta para o valor inicial da última configuração */}
+        <button className={styles.button} onClick={() => resetTimer(Math.floor(time / 60) || 5)}>
           Reset
         </button>
       </div>
