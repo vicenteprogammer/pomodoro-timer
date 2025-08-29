@@ -21,6 +21,12 @@ const Tasks = () =>{
       setNextId((prevId)=> prevId + 1)
       setTask('')
     }
+    console.log(tasks)
+  }
+
+  const deleteTask = (id: number) =>{
+    alert('Task deleted')
+    setTasks(tasks.filter((t)=> t.id !== id))
   }
 
   return(
@@ -35,7 +41,7 @@ const Tasks = () =>{
             <div className={styles.taskBox} >
               <li key={t.id}>{t.task}</li>
               <div className={styles.buttonsTask}>
-                <button className={styles.btnDelete} >Delete</button>
+                <button className={styles.btnDelete} onClick={() => deleteTask(t.id)} >Delete</button>
                 <button className={styles.btnCheck} >Check</button>
               </div>
             </div>
